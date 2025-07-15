@@ -528,31 +528,30 @@ if st.session_state.hr_mode and st.session_state.comparison_mode and st.session_
                 st.plotly_chart(fig_radar, use_container_width=True)
     
     # Candidate comparison table
+    # Candidate comparison table
     st.subheader("📋 Detailed Candidate Comparison")
     
     if analyzed_candidates > 0:
         df = create_candidate_table(st.session_state.candidates)
         
-        # Create a styled dataframe with proper formatting
-        def format_percentage(val):
-            if isinstance(val, (int, float)) and val <= 100:
-                return f"{val}%"
-            return val
+        # Create colored HTML table
+        colored_table_html = create_colored_table_html(df)
+        st.markdown(colored_table_html, unsafe_allow_html=True)
         
-        # Apply formatting and styling
-        styled_df = df.style.format({
-            'Overall Score': format_percentage,
-            'Skills Match': format_percentage
-        }).background_gradient(
-            subset=['Overall Score', 'Skills Match'], 
-            cmap='RdYlGn',
-            vmin=0, 
-            vmax=100
-        ).set_properties(**{
-            'text-align': 'center'
-        })
+        # Add color legend
+        st.write("**Score Legend:**")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.success("🟢 Excellent (80-100%)")
+        with col2:
+            st.warning("🟡 Good (60-79%)")
+        with col3:
+            st.error("🔴 Needs Improvement (<60%)")
         
-        st.dataframe(styled_df, use_container_width=True)
+        # Show top performers
+        if len(df) > 0:
+            top_candidate = df.loc[df['Overall Score'].idxmax()]
+            st.info(f"🏆 **Top Performer:** {top_candidate['Name']} with {top_candidate['Overall Score']}% overall score")
         
         # Download comparison report
         if st.button("📥 Download Comparison Report (JSON)"):
@@ -628,6 +627,7 @@ if st.session_state.hr_mode and st.session_state.comparison_mode and st.session_
                             st.info(f"🏆 {cert}")
                 else:
                     st.info("Resume analysis not available for this candidate.")
+
 
 # Chat interface (when not in comparison mode or when candidate is selected)
 if not st.session_state.comparison_mode or not st.session_state.hr_mode:
