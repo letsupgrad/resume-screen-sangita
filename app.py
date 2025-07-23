@@ -72,15 +72,18 @@ def extract_info_from_resume(resume_text: str) -> dict:
     }
     
     # Technical skills keywords
+   
     technical_skills = [
         'python', 'java', 'javascript', 'sql', 'html', 'css', 'react', 'angular', 'vue',
-        'node.js', 'django', 'flask', 'spring', 'mongodb', 'postgresql', 'mysql',
+        'node.js', 'django', 'flask', 'spring', 'mongodb', 'postgresql', 'mysql','nosql'
         'aws', 'azure', 'gcp', 'docker', 'kubernetes', 'git', 'jenkins', 'terraform',
         'machine learning', 'deep learning', 'tensorflow', 'pytorch', 'scikit-learn',
         'pandas', 'numpy', 'matplotlib', 'tableau', 'power bi', 'excel', 'r',
-        'c++', 'c#', '.net', 'php', 'ruby', 'go', 'rust', 'swift', 'kotlin',
+        'c++', 'c#', '.net', 'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'AI', 'ML'
         'agile', 'scrum', 'devops', 'ci/cd', 'microservices', 'rest api', 'graphql'
+        'Agile methodologies' , 'TensorFlow', 'Keras', 'hadoop', 'spark',  'Google Vertex AI'
     ]
+    
     
     # Soft skills keywords
     soft_skills = [
